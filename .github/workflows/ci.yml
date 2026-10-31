@@ -38,7 +38,7 @@ jobs:
       - run: pnpm run test:all
       - run: pnpm audit --audit-level=low
       - run: pnpm pack
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: coverage-${{ matrix.os }}-node-${{ matrix.node }}
