@@ -1,0 +1,56 @@
+{
+  "name": "grano-sign",
+  "version": "1.0.0",
+  "description": "Cryptographic document signing, traceability and Merkle proofs",
+  "type": "module",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js"
+    }
+  },
+  "files": [
+    "dist",
+    "examples",
+    "SECURITY.md",
+    "SCALABILITY.md",
+    "WORKERS.md"
+  ],
+  "scripts": {
+    "build": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:all": "cross-env RUN_LARGE_PAYLOAD_TESTS=1 NODE_OPTIONS=--max-old-space-size=4096 pnpm exec vitest run && pnpm run test:workers && pnpm run test:examples",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepack": "pnpm run build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "pnpm run format:check && pnpm run typecheck && pnpm run build && pnpm run test:coverage && pnpm run test:workers && pnpm run test:examples",
+    "test:workers": "pnpm run build && node --test test/workers.test.mjs",
+    "test:examples": "pnpm run build:examples && node .examples/01-basic.js && node .examples/02-workers.js && node .examples/03-anchoring-adapter.js",
+    "build:examples": "pnpm run build && tsc -p tsconfig.examples.json"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.12.1",
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@vitest/coverage-v8": "5.0.5",
+    "cross-env": "^10.1.0",
+    "prettier": "3.9.10",
+    "typescript": "^7.0.2",
+    "vitest": "5.0.5"
+  },
+  "dependencies": {
+    "@napi-rs/keyring": "^2.1.2",
+    "@openzeppelin/merkle-tree": "^1.0.8",
+    "@paralleldrive/cuid2": "^3.3.0",
+    "canonicalize": "^5.1.0",
+    "viem": "^2.57.13"
+  }
+}

@@ -1,0 +1,6 @@
+onlyBuiltDependencies:
+  - esbuild
+
+# MetaMask uses uuid.v4; v11 preserves its CommonJS API and fixes the bounds advisory.
+overrides:
+  '@metamask/utils>uuid': 11.1.1
