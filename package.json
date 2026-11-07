@@ -51,6 +51,6 @@
     "@openzeppelin/merkle-tree": "^1.0.8",
     "@paralleldrive/cuid2": "^3.3.0",
     "canonicalize": "^5.1.0",
-    "viem": "^2.57.13"
+    "viem": "^2.57.16"
   }
 }
